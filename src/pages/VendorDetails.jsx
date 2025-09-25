@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+
 import {
   ChartBarIcon,
   ArrowUpIcon,
