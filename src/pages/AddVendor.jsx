@@ -145,60 +145,65 @@ const VendorManagement = () => {
   return (
     <DashboardLayout>
       {/* TopBar */}
-      <div className="flex flex-wrap justify-between items-center mt-6 mb-6 gap-3 max-w-[95%] mx-auto">
-        {/* Tabs */}
-        <div className="flex gap-2 items-center overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
-          <button
-            onClick={() => setActiveTab("all")}
-            className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
-              activeTab === "all"
-                ? "bg-orange-500 text-white border-orange-500"
-                : "border-orange-500 text-orange-500 hover:bg-orange-100"
-            }`}
-          >
-            All Vendor
-          </button>
-          <button
-            onClick={() => setActiveTab("active")}
-            className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
-              activeTab === "active"
-                ? "bg-orange-500 text-white border-orange-500"
-                : "border-gray-400 text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            Active
-          </button>
-          <button
-            onClick={() => setActiveTab("suspended")}
-            className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
-              activeTab === "suspended"
-                ? "bg-orange-500 text-white border-orange-500"
-                : "border-gray-400 text-gray-600 hover:bg-gray-100"
-            }`}
-          >
-            Suspended
-          </button>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 max-w-[95%] mx-auto mt-6 mb-6">
+        {/* Left Section: Tabs + Search */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 w-full">
+          {/* Tabs */}
+          <div className="flex gap-2 items-center overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0">
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
+                activeTab === "all"
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "border-orange-500 text-orange-500 hover:bg-orange-100"
+              }`}
+            >
+              All Vendor
+            </button>
+            <button
+              onClick={() => setActiveTab("active")}
+              className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
+                activeTab === "active"
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "border-gray-400 text-gray-600 hover:bg-gray-100"
+              }`}
+            >
+              Active
+            </button>
+            <button
+              onClick={() => setActiveTab("suspended")}
+              className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
+                activeTab === "suspended"
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "border-gray-400 text-gray-600 hover:bg-gray-100"
+              }`}
+            >
+              Suspended
+            </button>
+          </div>
 
           {/* Search Bar */}
-          <div className="flex items-center border border-black rounded overflow-hidden h-[36px] w-full md:w-[90%] max-w-[1200px] ml-10">
+          <div className="flex items-center border border-black rounded overflow-hidden h-[36px] w-full max-w-[100%] lg:max-w-[600px]">
             <input
               type="text"
               placeholder="Search Vendor by Name, Mobile Number, Vendor ID, City, Pincode..."
               className="flex-1 px-4 text-sm text-gray-800 focus:outline-none h-full"
             />
-            <button className="bg-orange-500 hover:bg-orange-600 text-black text-sm px-6 h-full rounded-none">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 sm:px-6 h-full">
               Search
             </button>
           </div>
         </div>
 
         {/* Add Vendor Button */}
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-black text-white px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center"
-        >
-          + Add Vendor
-        </button>
+        <div className="w-full md:w-auto flex justify-end">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-black text-white px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
+          >
+            + Add Vendor
+          </button>
+        </div>
       </div>
 
       {/* Vendor Table */}

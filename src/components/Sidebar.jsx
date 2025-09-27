@@ -15,6 +15,8 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaWarehouse,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -138,14 +140,12 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Hamburger Button */}
+      {/* Hamburger Button for Mobile */}
       <button
-        className={`fixed top-4 left-3 z-50 md:hidden text-2xl transition-colors duration-300 ${
-          isOpen ? "text-[#F26422]" : "text-[#111827]"
-        }`}
+        className="fixed top-4 left-3 z-50 md:hidden text-2xl text-[#111827] transition-colors duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+        {isOpen ? <FaTimes /> : <FaBars />}
       </button>
 
       {/* Sidebar */}
@@ -169,7 +169,6 @@ const Sidebar = () => {
 
             return (
               <li key={item.name} className="flex flex-col">
-                {/* If item has a path and no subItems → Link */}
                 {!item.subItems ? (
                   <Link
                     to={item.path}

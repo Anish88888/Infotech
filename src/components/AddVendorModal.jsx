@@ -258,22 +258,28 @@ const AddVendorModal = ({ isOpen, onClose }) => {
 
               {/* Gender */}
               <div>
-                <label
-                  htmlFor="gender"
-                  className="block text-gray-700 font-medium mb-1"
-                >
+                <label className="block text-gray-700 font-medium mb-1">
                   Gender
                 </label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <UserIcon className="h-5 w-5 text-gray-400" />
-                  </span>
-                  <input
-                    id="gender"
-                    type="text"
-                    placeholder="Enter Authorized Person Name of Store"
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
-                  />
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      className="accent-orange-500"
+                    />
+                    <span className="text-gray-700 text-sm">Male</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      className="accent-orange-500"
+                    />
+                    <span className="text-gray-700 text-sm">Female</span>
+                  </label>
                 </div>
               </div>
 
@@ -463,6 +469,86 @@ const AddVendorModal = ({ isOpen, onClose }) => {
                     id="state"
                     type="text"
                     placeholder="Enter Authorized Person Name of Store"
+                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
+                  />
+                </div>
+              </div>
+              {/* Store Current Location */}
+              <div>
+                <label
+                  htmlFor="store-location"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  Store Current Location(Lat.)
+                </label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    {/* Location Marker Icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 11c1.656 0 3-1.344 3-3S13.656 5 12 5 9 6.344 9 8s1.344 3 3 3z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 2c4.418 0 8 3.582 8 8 0 6-8 12-8 12S4 16 4 10c0-4.418 3.582-8 8-8z"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    id="store-location"
+                    type="text"
+                    placeholder="Enter Store Current Location"
+                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
+                  />
+                </div>
+              </div>
+              {/* Store Current Location */}
+              <div>
+                <label
+                  htmlFor="store-location"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  Store Current Location(Long.)
+                </label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    {/* Location Marker Icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 11c1.656 0 3-1.344 3-3S13.656 5 12 5 9 6.344 9 8s1.344 3 3 3z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 2c4.418 0 8 3.582 8 8 0 6-8 12-8 12S4 16 4 10c0-4.418 3.582-8 8-8z"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    id="store-location"
+                    type="text"
+                    placeholder="Enter Store Current Location"
                     className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none"
                   />
                 </div>
