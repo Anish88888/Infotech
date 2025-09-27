@@ -1,7 +1,7 @@
 import React from "react";
 import DashboardLayout from "../components/DashboardLayout";
-// ✅ Correct import for your version of react-icons
-import { FaEdit, FaUserPlus, FaListAlt } from "react-icons/fa";
+// Correct FA6 imports
+import { FaPenToSquare, FaUserPlus, FaRectangleList } from "react-icons/fa6";
 
 const AdminDashboard = () => {
   return (
@@ -12,14 +12,14 @@ const AdminDashboard = () => {
         <div className="flex items-center gap-3">
           {/* Profile Image */}
           <img
-            src="https://i.pravatar.cc/50" // Replace with actual profile image if needed
+            src="https://i.pravatar.cc/50"
             alt="Profile"
             className="w-12 h-12 rounded-full"
           />
           <div>
             <h2 className="text-lg font-semibold flex flex-wrap items-center gap-2">
               Welcome Back, <span className="text-gray-700">NK Yadav</span>
-              <FaEdit className="text-gray-500 cursor-pointer" />
+              <FaPenToSquare className="text-gray-500 cursor-pointer" />
             </h2>
             <p className="text-sm text-gray-600">
               You have <span className="text-red-500 font-semibold">21</span>{" "}
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
             <FaUserPlus /> Add Vendor
           </button>
           <button className="bg-[#F26522] text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto">
-            <FaListAlt /> Add Category
+            <FaRectangleList /> Add Category
           </button>
         </div>
       </div>
