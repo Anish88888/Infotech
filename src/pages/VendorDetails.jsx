@@ -8,6 +8,7 @@ import {
   ChartBarIcon,
   ArrowUpIcon,
   ArrowDownIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 
 const VendorDetails = () => {
