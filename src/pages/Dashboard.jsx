@@ -1,5 +1,6 @@
 import React from "react";
 import DashboardLayout from "../components/DashboardLayout";
+// ✅ Correct import for your version of react-icons
 import { FaEdit, FaUserPlus, FaListAlt } from "react-icons/fa";
 
 const AdminDashboard = () => {
@@ -11,7 +12,7 @@ const AdminDashboard = () => {
         <div className="flex items-center gap-3">
           {/* Profile Image */}
           <img
-            src="https://i.pravatar.cc/50" // Replace with actual profile image
+            src="https://i.pravatar.cc/50" // Replace with actual profile image if needed
             alt="Profile"
             className="w-12 h-12 rounded-full"
           />
