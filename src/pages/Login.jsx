@@ -10,8 +10,6 @@ import {
   FaExclamationCircle,
 } from "react-icons/fa";
 
-let count = 0;
-
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -56,12 +54,11 @@ export default function Login() {
       alert("Please enter a new password");
     }
   };
-  count++;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="w-full max-w-md flex flex-col items-center">
         <img src={logo} alt="RushBaskets Logo" className="h-24 mb-8" />
-        {count}
 
         {!forgotPassword ? (
           <form onSubmit={handleLogin} className="w-full bg-white text-left">
