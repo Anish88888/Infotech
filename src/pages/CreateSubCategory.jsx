@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { Eye, Edit, Trash2 } from "lucide-react";
-import AddSubCategoryModal from "../components/AddSubCategoryModal "; // ✅ use correct modal
+import AddSubCategoryModal from "../components/AddSubCategoryModal"; // ✅ fixed import
 import { useNavigate } from "react-router-dom";
 
 const CreateSubCategory = () => {
