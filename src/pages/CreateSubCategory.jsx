@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { Eye, Edit, Trash2 } from "lucide-react";
-import AddSubCategoryModal from "../components/AddSubCategoryModal"; // ✅ fixed import
+import AddCategoryModal from "../components/AddCategoryModal";
 import { useNavigate } from "react-router-dom";
 
-const CreateSubCategory = () => {
+const CreateCategory = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -139,18 +139,31 @@ const CreateSubCategory = () => {
     ]);
   };
 
+  // Filter vendors by tab
+  const filteredVendors =
+    activeTab === "all"
+      ? vendors
+      : vendors.filter((v) => {
+          if (activeTab === "active") return v.status === "Active";
+          if (activeTab === "suspended") return v.status === "Suspended";
+          return true;
+        });
+
   // Pagination
   const indexOfLastVendor = currentPage * itemsPerPage;
   const indexOfFirstVendor = indexOfLastVendor - itemsPerPage;
-  const currentVendors = vendors.slice(indexOfFirstVendor, indexOfLastVendor);
-  const totalPages = Math.ceil(vendors.length / itemsPerPage);
+  const currentVendors = filteredVendors.slice(
+    indexOfFirstVendor,
+    indexOfLastVendor
+  );
+  const totalPages = Math.ceil(filteredVendors.length / itemsPerPage);
 
   return (
     <DashboardLayout>
       {/* TopBar */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 max-w-[95%] mx-auto mt-6 mb-6">
+        {/* Tabs */}
         <div className="flex flex-col lg:flex-row lg:items-center gap-3 w-full">
-          {/* Tabs */}
           <div className="flex gap-2 items-center overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0">
             <button
               onClick={() => setActiveTab("all")}
@@ -196,18 +209,19 @@ const CreateSubCategory = () => {
             </button>
           </div>
         </div>
-        {/* Add Sub Category Button */}
+
+        {/* Add Category Button */}
         <div>
           <button
-            onClick={() => setIsModalOpen(true)} // ✅ opens modal
+            onClick={() => setIsModalOpen(true)}
             className="bg-black text-white px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
           >
-            + Add Sub Category
+            + Add Category
           </button>
         </div>
       </div>
 
-      {/* Table */}
+      {/* Category Table */}
       <div className="bg-white rounded-lg shadow-md overflow-x-auto max-w-[95%] mx-auto">
         <table className="w-full text-sm">
           <thead>
@@ -223,7 +237,10 @@ const CreateSubCategory = () => {
           </thead>
           <tbody>
             {currentVendors.map((vendor, idx) => (
-              <tr key={vendor.id} className="hover:bg-gray-50 border-b">
+              <tr
+                key={vendor.id}
+                className="bg-white hover:bg-gray-50 transition border-b"
+              >
                 <td className="p-3">{indexOfFirstVendor + idx + 1}</td>
                 <td className="p-3">{vendor.image}</td>
                 <td className="p-3">{vendor.category}</td>
@@ -234,7 +251,10 @@ const CreateSubCategory = () => {
                 </td>
                 <td className="p-3">
                   <div className="flex gap-2">
-                    <button className="text-orange-600 hover:text-blue-700">
+                    <button
+                      onClick={() => setIsEditModalOpen(true)}
+                      className="text-orange-600 hover:text-blue-700"
+                    >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
@@ -257,14 +277,59 @@ const CreateSubCategory = () => {
         </table>
       </div>
 
-      {/* Add Sub Category Modal */}
-      <AddSubCategoryModal
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-end items-center gap-6 mt-6 max-w-[95%] mx-auto">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            className="bg-orange-500 text-white px-6 py-2 text-sm font-medium hover:bg-orange-600"
+          >
+            Back
+          </button>
+
+          <div className="flex items-center gap-2 text-sm font-medium">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-1 rounded ${
+                  currentPage === page
+                    ? "bg-orange-500 text-white"
+                    : "bg-gray-100 hover:bg-gray-200"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+            className="bg-green-700 text-white px-6 py-2 text-sm font-medium rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-800"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
+      {/* Add Category Modal */}
+      <AddCategoryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onAdd={handleAddCategory} // ✅ add new row
+        onAdd={handleAddCategory}
+      />
+
+      {/* Edit Category Modal */}
+      <AddCategoryModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        isEdit={true}
       />
     </DashboardLayout>
   );
 };
 
-export default CreateSubCategory;
+export default CreateCategory;

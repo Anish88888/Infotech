@@ -4,7 +4,7 @@ import { Eye, Edit, Trash2 } from "lucide-react";
 import AddVendorModal from "../components/AddVendorModal";
 import { useNavigate } from "react-router-dom";
 
-const VendorManagement = () => {
+const AllVendor = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -346,4 +346,4 @@ const VendorManagement = () => {
   );
 };
 
-export default VendorManagement;
+export default AllVendor;
