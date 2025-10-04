@@ -127,6 +127,12 @@ const AllOrder = () => {
 
       {/* Pagination */}
       <div className="flex flex-col sm:flex-row justify-between sm:justify-end items-center gap-4 mt-6 w-full max-w-[98%] mx-auto">
+        <button
+          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg text-sm"
+        >
+          Back
+        </button>
         <div className="flex gap-2 text-sm flex-wrap justify-center sm:justify-start">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
@@ -144,13 +150,6 @@ const AllOrder = () => {
         </div>
 
         <div className="flex gap-3 flex-wrap justify-center">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg text-sm"
-          >
-            Back
-          </button>
-
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg text-sm"
