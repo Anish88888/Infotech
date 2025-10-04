@@ -20,7 +20,7 @@ const SingleOrder = () => {
             className="bg-gray-700 text-white px-6 py-2 font-semibold shadow rounded"
             onClick={() => setIsModalOpen(true)}
           >
-            Assign Delivery Boy
+            Assign Delivery Partner
           </button>
 
           {/* Modal */}

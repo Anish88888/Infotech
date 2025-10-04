@@ -1,9 +1,12 @@
 // src/components/AssignDeliveryBoyModal.jsx
 import React, { useState } from "react";
 import { X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import DeliveryCostModal from "./DeliveryCostModal";
 
 const AssignDeliveryBoyModal = ({ isOpen, onClose }) => {
   const [selected, setSelected] = useState([]);
+  const [openCostModal, setOpenCostModal] = useState(false);
 
   const deliveryPartners = [
     {
@@ -15,30 +18,30 @@ const AssignDeliveryBoyModal = ({ isOpen, onClose }) => {
     },
     {
       id: 2,
-      name: "Ramesh Kumar",
-      ratings: "3.5 Star",
-      delivered: 19,
+      name: "Suresh Yadav",
+      ratings: "4.0 Star",
+      delivered: 25,
       status: "Offline",
     },
     {
       id: 3,
-      name: "Ramesh Kumar",
-      ratings: "3.5 Star",
-      delivered: 19,
+      name: "Mahesh Singh",
+      ratings: "4.5 Star",
+      delivered: 32,
       status: "On The Way",
     },
     {
       id: 4,
-      name: "Ramesh Kumar",
-      ratings: "3.5 Star",
-      delivered: 19,
+      name: "Ajay Verma",
+      ratings: "3.8 Star",
+      delivered: 21,
       status: "Offline",
     },
     {
       id: 5,
-      name: "Ramesh Kumar",
-      ratings: "3.5 Star",
-      delivered: 19,
+      name: "Vikas Sharma",
+      ratings: "4.2 Star",
+      delivered: 28,
       status: "Online",
     },
   ];
@@ -49,65 +52,97 @@ const AssignDeliveryBoyModal = ({ isOpen, onClose }) => {
     );
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-40 z-50">
-      <div className="bg-white w-[65%] max-h-[90vh] rounded shadow-lg overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-center p-3 border-b font-bold text-lg">
-          Assign Delivery Partner
-          <button onClick={onClose}>
-            <X className="text-orange-500" />
-          </button>
-        </div>
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center px-2 sm:px-4">
+          {/* Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-black bg-opacity-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
 
-        {/* Table */}
-        <div className="overflow-y-auto flex-1">
-          <table className="w-full text-sm">
-            <thead className="bg-orange-500 text-white">
-              <tr>
-                <th className="p-2">S.N</th>
-                <th className="p-2">Delivery Partner</th>
-                <th className="p-2">Ratings</th>
-                <th className="p-2">Today's Delivered</th>
-                <th className="p-2">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {deliveryPartners.map((partner, index) => (
-                <tr
-                  key={partner.id}
-                  className={`cursor-pointer ${
-                    selected.includes(partner.id) ? "bg-blue-100" : ""
-                  }`}
-                  onClick={() => toggleSelect(partner.id)}
-                >
-                  <td className="p-2 text-center">
-                    <input
-                      type="checkbox"
-                      checked={selected.includes(partner.id)}
-                      onChange={() => toggleSelect(partner.id)}
-                    />
-                  </td>
-                  <td className="p-2">{partner.name}</td>
-                  <td className="p-2">{partner.ratings}</td>
-                  <td className="p-2 text-center">{partner.delivered}</td>
-                  <td className="p-2">{partner.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative bg-white w-full sm:w-[80%] md:w-[70%] lg:w-[65%] max-h-[90vh] rounded-2xl shadow-xl overflow-hidden flex flex-col"
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center p-4 border-b">
+              <h2 className="font-bold text-base sm:text-lg md:text-xl">
+                Assign Delivery Partner
+              </h2>
+              <button onClick={onClose}>
+                <X className="text-orange-500 w-6 h-6" />
+              </button>
+            </div>
 
-        {/* Footer */}
-        <div className="p-3 flex justify-end border-t">
-          <button className="bg-green-600 text-white px-6 py-2 rounded">
-            Next
-          </button>
+            {/* Table */}
+            <div className="overflow-y-auto flex-1">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs sm:text-sm md:text-base">
+                  <thead className="bg-orange-500 text-white">
+                    <tr>
+                      <th className="p-2">Select</th>
+                      <th className="p-2">Delivery Partner</th>
+                      <th className="p-2">Ratings</th>
+                      <th className="p-2">Today's Delivered</th>
+                      <th className="p-2">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {deliveryPartners.map((partner) => (
+                      <tr
+                        key={partner.id}
+                        className={`cursor-pointer hover:bg-orange-50 transition ${
+                          selected.includes(partner.id) ? "bg-blue-100" : ""
+                        }`}
+                        onClick={() => toggleSelect(partner.id)}
+                      >
+                        <td className="p-2 text-center">
+                          <input
+                            type="checkbox"
+                            checked={selected.includes(partner.id)}
+                            onChange={() => toggleSelect(partner.id)}
+                            onClick={(e) => e.stopPropagation()} // prevent duplicate toggle
+                          />
+                        </td>
+                        <td className="p-2">{partner.name}</td>
+                        <td className="p-2">{partner.ratings}</td>
+                        <td className="p-2 text-center">{partner.delivered}</td>
+                        <td className="p-2">{partner.status}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 flex justify-end border-t">
+              <button
+                className="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base transition"
+                onClick={() => setOpenCostModal(true)}
+              >
+                Next
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Delivery Cost Modal */}
+          <DeliveryCostModal
+            isOpen={openCostModal}
+            onClose={() => setOpenCostModal(false)}
+          />
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { Eye, Edit, Trash2 } from "lucide-react";
-import AddCategoryModal from "../components/AddCategoryModal";
+import AddCategoryModal from "../components/AddSubCategoryModal ";
 import { useNavigate } from "react-router-dom";
 
 const CreateCategory = () => {
@@ -216,7 +216,7 @@ const CreateCategory = () => {
             onClick={() => setIsModalOpen(true)}
             className="bg-black text-white px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
           >
-            + Add Category
+            + Add Sub Category
           </button>
         </div>
       </div>
