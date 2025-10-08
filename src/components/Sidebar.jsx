@@ -39,7 +39,7 @@ const Sidebar = () => {
       name: "Product Management",
       icon: <FaBox />,
       subItems: [
-        { name: "Add Product", path: "/products/add" },
+        { name: " Product", path: "/products/" },
         { name: "All Product", path: "/products/all" },
         { name: "Trending Product", path: "/products/trending" },
       ],

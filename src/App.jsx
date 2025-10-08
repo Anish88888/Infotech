@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import AllProduct from "./pages/AllProduct";
+import SingleProduct from "./pages/SingleProduct";
+import AddProduct from "./components/AddProduct";
 import AllVendor from "./pages/AllVendor";
 import VendorDetails from "./pages/VendorDetails";
 import CreateCategory from "./pages/CreateCategory";
@@ -18,6 +20,8 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/products/all" element={<AllProduct />} />
+        <Route path="/products/:id" element={<SingleProduct />} />
+        <Route path="/products/add" element={<AddProduct />} />
         <Route path="/vendor/all" element={<AllVendor />} />
 
         <Route path="/vendor/:id" element={<VendorDetails />} />
