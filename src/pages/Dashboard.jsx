@@ -1,13 +1,13 @@
 import React from "react";
 import DashboardLayout from "../components/DashboardLayout";
 // Correct FA6 imports
-import { FaPenToSquare, FaUserPlus, FaRectangleList } from "react-icons/fa6";
+import { FaPenToSquare, FaUserPlus, FaEye } from "react-icons/fa6";
 
 const AdminDashboard = () => {
   return (
     <DashboardLayout>
       {/* Welcome Section */}
-      <div className="mt-4 bg-white rounded-md shadow p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
+      <div className="mt-4 bg-white rounded-sm shadow p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
         {/* Left side - Profile + Text */}
         <div className="flex items-center gap-3">
           {/* Profile Image */}
@@ -35,8 +35,9 @@ const AdminDashboard = () => {
           <button className="bg-[#3B7080] text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto">
             <FaUserPlus /> Add Vendor
           </button>
-          <button className="bg-[#F26522] text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto">
-            <FaRectangleList /> Add Category
+          <button className="bg-orange-600 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto">
+            <FaEye />
+            View
           </button>
         </div>
       </div>

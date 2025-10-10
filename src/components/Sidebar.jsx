@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-
 import {
-  FaTachometerAlt,
-  FaBox,
-  FaClipboardList,
-  FaChartBar,
-  FaBell,
-  FaBullhorn,
-  FaTicketAlt,
-  FaTruck,
-  FaLifeRing,
-  FaCog,
-  FaChevronDown,
-  FaChevronUp,
-  FaWarehouse,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
+  LayoutDashboard,
+  Package,
+  Boxes,
+  ShoppingCart,
+  Tags,
+  TicketPercent,
+  Bell,
+  BarChart3,
+  Store,
+  Headphones,
+  Users,
+  Settings,
+  ChevronDown,
+  ChevronUp,
+  Menu,
+  X,
+  User,
+  KeyRound,
+  UserCog,
+  LogOut,
+} from "lucide-react";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,19 +38,23 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { name: "Dashboard", icon: <FaTachometerAlt />, path: "/dashboard" },
+    {
+      name: "Dashboard",
+      icon: <LayoutDashboard size={16} />,
+      path: "/dashboard",
+    },
     {
       name: "Product Management",
-      icon: <FaBox />,
+      icon: <Package size={16} />,
       subItems: [
-        { name: " Product", path: "/products/" },
+        { name: "Product", path: "/products/", hasDot: true },
         { name: "All Product", path: "/products/all" },
         { name: "Trending Product", path: "/products/trending" },
       ],
     },
     {
       name: "Inventory",
-      icon: <FaWarehouse />,
+      icon: <Boxes size={16} />,
       subItems: [
         { name: "All Product", path: "/inventory/all" },
         { name: "Out of Stock", path: "/inventory/out-of-stock" },
@@ -55,7 +63,7 @@ const Sidebar = () => {
     },
     {
       name: "Order Management",
-      icon: <FaClipboardList />,
+      icon: <ShoppingCart size={16} />,
       subItems: [
         { name: "All Order", path: "/orders/all" },
         { name: "Pending Order", path: "/orders/pending" },
@@ -65,7 +73,7 @@ const Sidebar = () => {
     },
     {
       name: "Category Management",
-      icon: <FaBullhorn />,
+      icon: <Tags size={16} />,
       subItems: [
         { name: "All Category", path: "/category/all" },
         { name: "Create Category", path: "/category/create" },
@@ -74,7 +82,7 @@ const Sidebar = () => {
     },
     {
       name: "Coupons & Offer",
-      icon: <FaTicketAlt />,
+      icon: <TicketPercent size={16} />,
       subItems: [
         { name: "All Coupons", path: "/coupons/all" },
         { name: "Create Coupons", path: "/coupons/create" },
@@ -83,7 +91,7 @@ const Sidebar = () => {
     },
     {
       name: "Notification",
-      icon: <FaBell />,
+      icon: <Bell size={16} />,
       subItems: [
         { name: "Notification", path: "/notification" },
         { name: "Shoot Notification", path: "/notification/shoot" },
@@ -92,7 +100,7 @@ const Sidebar = () => {
     },
     {
       name: "Analytics",
-      icon: <FaChartBar />,
+      icon: <BarChart3 size={16} />,
       subItems: [
         { name: "Sales Report", path: "/analytics/sales" },
         { name: "Vendor Report", path: "/analytics/vendor" },
@@ -101,7 +109,7 @@ const Sidebar = () => {
     },
     {
       name: "Vendor Management",
-      icon: <FaTruck />,
+      icon: <Store size={16} />,
       subItems: [
         { name: "All Vendor", path: "/vendor/all" },
         { name: "Add Vendor", path: "/vendor/add" },
@@ -110,7 +118,7 @@ const Sidebar = () => {
     },
     {
       name: "Vendor Support",
-      icon: <FaLifeRing />,
+      icon: <Headphones size={16} />,
       subItems: [
         { name: "New Ticket", path: "/vendor-support/new" },
         { name: "Open Ticket", path: "/vendor-support/open" },
@@ -119,7 +127,7 @@ const Sidebar = () => {
     },
     {
       name: "User Support",
-      icon: <FaLifeRing />,
+      icon: <Users size={16} />,
       subItems: [
         { name: "New Ticket", path: "/user-support/new" },
         { name: "Open Ticket", path: "/user-support/open" },
@@ -128,12 +136,24 @@ const Sidebar = () => {
     },
     {
       name: "Settings",
-      icon: <FaCog />,
+      icon: <Settings size={16} />,
       subItems: [
-        { name: "Profile", path: "/settings/profile" },
-        { name: "Change Password", path: "/settings/password" },
-        { name: "Manage Role", path: "/settings/role" },
-        { name: "Logout", path: "/logout" },
+        {
+          name: "Profile",
+          path: "/settings/profile",
+          icon: <User size={14} />,
+        },
+        {
+          name: "Change Password",
+          path: "/settings/password",
+          icon: <KeyRound size={14} />,
+        },
+        {
+          name: "Manage Role",
+          path: "/settings/role",
+          icon: <UserCog size={14} />,
+        },
+        { name: "Logout", path: "/logout", icon: <LogOut size={14} /> },
       ],
     },
   ];
@@ -142,25 +162,32 @@ const Sidebar = () => {
     <>
       {/* Hamburger Button for Mobile */}
       <button
-        className="fixed top-4 left-3 z-50 md:hidden text-2xl text-[#111827] transition-colors duration-300"
+        className="fixed top-4 left-3 z-50 md:hidden text-2xl text-black transition-colors duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <FaTimes /> : <FaBars />}
+        {isOpen ? <X /> : <Menu />}
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-screen bg-white text-[#6B7280] shadow-lg p-2 transition-transform duration-300 z-40
+        className={`fixed top-0 left-0 h-screen bg-white text-black shadow-lg p-2 transition-transform duration-300 z-40
         ${isOpen ? "translate-x-0" : "-translate-x-full"} 
         md:translate-x-0 md:w-60`}
       >
+        {/* Header */}
         <div className="flex items-center justify-center py-3 border-b border-gray-200">
-          <h2 className="text-base font-semibold text-[#111827]">
+          <h2 className="text-sm font-bold text-black uppercase tracking-wide">
             Admin Panel
           </h2>
         </div>
 
-        <ul className="mt-3 text-sm flex flex-col space-y-[2px]">
+        {/* Menu Title */}
+        <p className="mt-3 mb-2 text-[11px] font-semibold tracking-wide text-gray-500 px-2">
+          MAIN MENU
+        </p>
+
+        {/* Sidebar Menu */}
+        <ul className="text-[13px] flex flex-col space-y-[2px] h-[calc(100vh-100px)] overflow-y-auto pr-2 custom-scrollbar">
           {menuItems.map((item) => {
             const isActive =
               activeItem === item.path ||
@@ -172,27 +199,27 @@ const Sidebar = () => {
                 {!item.subItems ? (
                   <Link
                     to={item.path}
-                    className={`flex items-center gap-2 px-2 py-1.5 rounded-md transition-colors duration-200 
-                      ${
-                        isActive
-                          ? "bg-[#F26422] text-white shadow-sm"
-                          : "hover:bg-gray-100 text-[#111827]"
-                      }`}
-                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center gap-2 px-2 py-1.5 rounded-md font-semibold transition-colors duration-200 
+                    ${
+                      isActive
+                        ? "bg-[#F26422] text-white shadow-sm"
+                        : "hover:bg-gray-100 text-black"
+                    }`}
+                    onClick={() => {
+                      if (window.innerWidth < 768) setIsOpen(false);
+                    }}
                   >
                     {item.icon}
                     <span>{item.name}</span>
                   </Link>
                 ) : (
                   <>
-                    {/* Parent with dropdown */}
+                    {/* Main Dropdown Item */}
                     <div
-                      className={`flex items-center justify-between gap-2 px-2 py-1.5 rounded-md cursor-pointer transition-colors duration-200 
-                        ${
-                          isActive
-                            ? "bg-[#F26422] text-white shadow-sm"
-                            : "hover:bg-gray-100 text-[#111827]"
-                        }`}
+                      className={`flex items-center justify-between gap-2 px-2 py-1.5 rounded-md cursor-pointer transition-colors duration-200 font-bold
+                      ${
+                        isActive ? "text-black" : "hover:bg-gray-100 text-black"
+                      }`}
                       onClick={() => toggleDropdown(item.name)}
                     >
                       <div className="flex items-center gap-2">
@@ -200,31 +227,41 @@ const Sidebar = () => {
                         <span>{item.name}</span>
                       </div>
                       {openDropdowns[item.name] ? (
-                        <FaChevronUp className="text-xs" />
+                        <ChevronUp size={12} />
                       ) : (
-                        <FaChevronDown className="text-xs" />
+                        <ChevronDown size={12} />
                       )}
                     </div>
 
-                    {/* Dropdown sub-items */}
+                    {/* Submenu Items */}
                     {openDropdowns[item.name] && (
-                      <ul className="ml-5 mt-1 flex flex-col space-y-1">
-                        {item.subItems.map((sub) => (
-                          <li key={sub.name}>
-                            <Link
-                              to={sub.path}
-                              className={`block px-2 py-1 rounded-md transition-colors duration-200 
-                                ${
-                                  activeItem === sub.path
-                                    ? "bg-[#F26422] text-white"
-                                    : "hover:bg-gray-100 text-[#6B7280]"
+                      <ul className="ml-5 mt-1 flex flex-col border-l pl-2">
+                        {item.subItems.map((sub) => {
+                          const subActive = activeItem === sub.path;
+                          return (
+                            <li key={sub.name} className="relative">
+                              <Link
+                                to={sub.path}
+                                className={`block px-2 py-1 rounded-md transition-colors duration-200 ${
+                                  subActive
+                                    ? "text-[#F26422] font-medium before:content-[''] before:absolute before:left-[-8px] before:top-0 before:h-full before:w-[2px] before:bg-[#F26422]"
+                                    : "text-black hover:text-[#F26422] font-normal"
                                 }`}
-                              onClick={() => setIsOpen(false)}
-                            >
-                              {sub.name}
-                            </Link>
-                          </li>
-                        ))}
+                                onClick={() => {
+                                  if (window.innerWidth < 768) setIsOpen(false);
+                                }}
+                              >
+                                <div className="flex items-center gap-1">
+                                  {sub.icon && sub.icon}
+                                  <span>{sub.name}</span>
+                                  {sub.hasDot && (
+                                    <span className="ml-1 inline-block w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                  )}
+                                </div>
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     )}
                   </>
@@ -235,7 +272,7 @@ const Sidebar = () => {
         </ul>
       </aside>
 
-      {/* Overlay for Mobile */}
+      {/* Mobile Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black opacity-40 z-30 md:hidden"

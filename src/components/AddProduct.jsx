@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Upload } from "lucide-react";
 
-export default function AddProductPopup() {
-  const [isOpen, setIsOpen] = useState(true); // control popup visibility
+export default function AddProductPopup({ isOpen, onClose }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -25,9 +24,7 @@ export default function AddProductPopup() {
 
   const handleMainImageUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({ ...prev, mainImage: file }));
-    }
+    if (file) setFormData((prev) => ({ ...prev, mainImage: file }));
   };
 
   const handleGalleryUpload = (index, e) => {
@@ -43,32 +40,32 @@ export default function AddProductPopup() {
     e.preventDefault();
     console.log("Form Data:", formData);
     alert("Product submitted! Check console for details.");
+    onClose(); // Close modal after submission
   };
 
-  if (!isOpen) return null; // hide popup when closed
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 p-2">
       <div className="bg-white w-full max-w-[1100px] rounded-md shadow-lg relative border border-gray-300 max-h-[90vh] flex flex-col">
-        {/* ❌ Close Button */}
+        {/* Close Button */}
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={onClose}
           className="absolute top-2 right-2 text-orange-500 hover:text-red-600 text-lg font-bold"
         >
           ✕
         </button>
 
-        {/* 🔹 Header */}
+        {/* Header */}
         <h2 className="text-[14px] font-bold border-b border-gray-300 pb-2 pt-3 px-5">
           Add Product
         </h2>
 
-        {/* 🔸 Scrollable Form */}
+        {/* Scrollable Form */}
         <div className="overflow-y-auto px-5 py-4">
           <form className="space-y-4 text-[13px]" onSubmit={handleSubmit}>
-            {/* 🔹 Product Title + Upload Image */}
+            {/* Product Title + Main Image */}
             <div className="grid grid-cols-1 lg:grid-cols-[2.2fr,1fr] gap-4">
-              {/* Left Side — Title + Description */}
               <div className="flex flex-col space-y-3">
                 <div>
                   <label className="block font-semibold mb-1">
@@ -83,7 +80,6 @@ export default function AddProductPopup() {
                     className="w-full border border-orange-400 rounded-sm p-2 focus:outline-none text-[13px]"
                   />
                 </div>
-
                 <div className="flex flex-col flex-1">
                   <label className="block font-semibold mb-1">
                     Product Description
@@ -99,7 +95,7 @@ export default function AddProductPopup() {
                 </div>
               </div>
 
-              {/* Right Side — Upload Image */}
+              {/* Upload Main Image */}
               <div className="flex flex-col justify-end">
                 <label className="block font-semibold mb-1">
                   Upload Main Image
@@ -124,7 +120,7 @@ export default function AddProductPopup() {
               </div>
             </div>
 
-            {/* 🔸 SKU / Inventory / Category / Subcategory */}
+            {/* SKU / Inventory / Category / Subcategory */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <label className="block font-semibold mb-1">SKU/HSN</label>
@@ -176,7 +172,7 @@ export default function AddProductPopup() {
               </div>
             </div>
 
-            {/* 🔹 Price Section */}
+            {/* Price Section */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block font-semibold mb-1">Actual Price</label>
@@ -213,7 +209,7 @@ export default function AddProductPopup() {
               </div>
             </div>
 
-            {/* 🔸 Product Gallery + Tag */}
+            {/* Product Gallery + Tags */}
             <div className="grid grid-cols-1 lg:grid-cols-[4fr,1fr] gap-4">
               <div>
                 <label className="block font-semibold mb-1">
@@ -258,7 +254,7 @@ export default function AddProductPopup() {
               </div>
             </div>
 
-            {/* ✅ Submit Button */}
+            {/* Submit Button */}
             <div className="flex justify-end mt-3">
               <button
                 type="submit"

@@ -4,7 +4,7 @@ import { Eye, Edit, Trash2 } from "lucide-react";
 import AddCategoryModal from "../components/AddSubCategoryModal ";
 import { useNavigate } from "react-router-dom";
 
-const CreateCategory = () => {
+const CreateSubCategory = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -228,9 +228,9 @@ const CreateCategory = () => {
             <tr className="bg-orange-500 text-black">
               <th className="p-3 text-left">S.N</th>
               <th className="p-3 text-left">Image</th>
-              <th className="p-3 text-left">Category</th>
-              <th className="p-3 text-left">Products</th>
               <th className="p-3 text-left">Sub Category</th>
+              <th className="p-3 text-left">Products</th>
+              <th className="p-3 text-left">Category</th>
               <th className="p-3 text-left">Status</th>
               <th className="p-3 text-left">Action</th>
             </tr>
@@ -332,4 +332,4 @@ const CreateCategory = () => {
   );
 };
 
-export default CreateCategory;
+export default CreateSubCategory;

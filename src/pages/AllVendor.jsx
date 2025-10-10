@@ -9,10 +9,11 @@ const AllVendor = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  const itemsPerPage = 8; // Vendors per page
+  const itemsPerPage = 8;
 
-  // Move vendors to state so we can delete them
+  // Vendors list (only Approved & Suspended)
   const [vendors, setVendors] = useState([
     {
       id: "NO101",
@@ -21,14 +22,6 @@ const AllVendor = () => {
       pincode: "201301",
       contact: "6203689042",
       status: "Approved",
-    },
-    {
-      id: "NO102",
-      name: "Ravi Sharma",
-      city: "Delhi",
-      pincode: "110001",
-      contact: "9876543210",
-      status: "Pending",
     },
     {
       id: "NO103",
@@ -47,14 +40,6 @@ const AllVendor = () => {
       status: "Approved",
     },
     {
-      id: "NO105",
-      name: "Pooja Singh",
-      city: "Delhi",
-      pincode: "110002",
-      contact: "9012345678",
-      status: "Pending",
-    },
-    {
       id: "NO106",
       name: "Amit Kumar",
       city: "Ghaziabad",
@@ -68,7 +53,7 @@ const AllVendor = () => {
       city: "Noida",
       pincode: "201301",
       contact: "9876123450",
-      status: "Rejected",
+      status: "Suspended",
     },
     {
       id: "NO108",
@@ -77,14 +62,6 @@ const AllVendor = () => {
       pincode: "110003",
       contact: "9123456701",
       status: "Approved",
-    },
-    {
-      id: "NO109",
-      name: "Seema Jain",
-      city: "Gurgaon",
-      pincode: "122002",
-      contact: "9988123456",
-      status: "Pending",
     },
     {
       id: "NO110",
@@ -110,48 +87,55 @@ const AllVendor = () => {
       contact: "9234567891",
       status: "Approved",
     },
-    {
-      id: "NO113",
-      name: "Priya Sharma",
-      city: "Noida",
-      pincode: "201305",
-      contact: "9876123451",
-      status: "Pending",
-    },
   ]);
 
   const statusColors = {
     Approved: "text-green-600 font-semibold",
-    Pending: "text-yellow-600 font-semibold",
-    Rejected: "text-red-600 font-semibold",
     Suspended: "text-gray-600 font-semibold",
   };
 
+  // Delete vendor
   const handleDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this vendor?"
-    );
-    if (!confirmDelete) return;
-
-    setVendors((prev) => prev.filter((vendor) => vendor.id !== id));
+    if (window.confirm("Are you sure you want to delete this vendor?")) {
+      setVendors((prev) => prev.filter((vendor) => vendor.id !== id));
+    }
   };
+
+  // Filter vendors based on tab and search
+  const filteredVendors = vendors
+    .filter((vendor) => {
+      if (activeTab === "active") return vendor.status === "Approved";
+      if (activeTab === "suspended") return vendor.status === "Suspended";
+      return true; // all
+    })
+    .filter((vendor) =>
+      [vendor.name, vendor.id, vendor.city, vendor.pincode, vendor.contact]
+        .join(" ")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+    );
 
   // Pagination
   const indexOfLastVendor = currentPage * itemsPerPage;
   const indexOfFirstVendor = indexOfLastVendor - itemsPerPage;
-  const currentVendors = vendors.slice(indexOfFirstVendor, indexOfLastVendor);
-  const totalPages = Math.ceil(vendors.length / itemsPerPage);
+  const currentVendors = filteredVendors.slice(
+    indexOfFirstVendor,
+    indexOfLastVendor
+  );
+  const totalPages = Math.ceil(filteredVendors.length / itemsPerPage);
 
   return (
     <DashboardLayout>
       {/* TopBar */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 max-w-[95%] mx-auto mt-6 mb-6">
-        {/* Left Section: Tabs + Search */}
         <div className="flex flex-col lg:flex-row lg:items-center gap-3 w-full">
           {/* Tabs */}
           <div className="flex gap-2 items-center overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0">
             <button
-              onClick={() => setActiveTab("all")}
+              onClick={() => {
+                setActiveTab("all");
+                setCurrentPage(1);
+              }}
               className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === "all"
                   ? "bg-orange-500 text-white border-orange-500"
@@ -161,7 +145,10 @@ const AllVendor = () => {
               All Vendor
             </button>
             <button
-              onClick={() => setActiveTab("active")}
+              onClick={() => {
+                setActiveTab("active");
+                setCurrentPage(1);
+              }}
               className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === "active"
                   ? "bg-orange-500 text-white border-orange-500"
@@ -171,7 +158,10 @@ const AllVendor = () => {
               Active
             </button>
             <button
-              onClick={() => setActiveTab("suspended")}
+              onClick={() => {
+                setActiveTab("suspended");
+                setCurrentPage(1);
+              }}
               className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === "suspended"
                   ? "bg-orange-500 text-white border-orange-500"
@@ -186,8 +176,10 @@ const AllVendor = () => {
           <div className="flex items-center border border-black rounded overflow-hidden h-[36px] w-full max-w-[100%] lg:max-w-[600px]">
             <input
               type="text"
-              placeholder="Search Vendor by Name, Mobile Number, Vendor ID, City, Pincode..."
+              placeholder="Search Vendor by Name, Vendor ID, City, Pincode..."
               className="flex-1 px-4 text-sm text-gray-800 focus:outline-none h-full"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 sm:px-6 h-full">
               Search
@@ -207,7 +199,7 @@ const AllVendor = () => {
       </div>
 
       {/* Vendor Table */}
-      <div className="bg-white rounded-lg shadow-md overflow-x-auto max-w-[95%] mx-auto">
+      <div className="bg-white rounded-sm shadow-sm overflow-x-auto max-w-[95%] mx-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-orange-500 text-black">
@@ -225,7 +217,7 @@ const AllVendor = () => {
             {currentVendors.map((vendor, idx) => (
               <tr
                 key={vendor.id}
-                className="bg-white shadow-sm rounded-md hover:bg-gray-50 transition border-b-4 border-gray-200"
+                className="bg-white shadow-sm rounded-sm hover:bg-gray-50 transition border-b-4 border-gray-200"
               >
                 <td className="p-3 rounded-l-md">
                   {indexOfFirstVendor + idx + 1}
@@ -236,9 +228,9 @@ const AllVendor = () => {
                 <td className="p-3">{vendor.pincode}</td>
                 <td className="p-3">{vendor.contact}</td>
                 <td className={`p-3 ${statusColors[vendor.status]}`}>
-                  {vendor.status}
+                  {vendor.status === "Approved" ? "Active" : "Suspended"}
                 </td>
-                <td className="p-3 rounded-r-md">
+                <td className="p-3 rounded-r-sm">
                   <div className="flex gap-2">
                     <button
                       onClick={() => setIsEditModalOpen(true)}
@@ -246,14 +238,12 @@ const AllVendor = () => {
                     >
                       <Edit className="w-4 h-4" />
                     </button>
-
                     <button
                       onClick={() => handleDelete(vendor.id)}
                       className="text-orange-600 hover:text-blue-700"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
-
                     <button
                       onClick={() => navigate(`/vendor/${vendor.id}`)}
                       className="text-orange-600 hover:text-blue-700"
@@ -276,7 +266,6 @@ const AllVendor = () => {
         >
           Back
         </button>
-
         <div className="flex items-center gap-2 text-sm text-black font-medium">
           {(() => {
             const pages = [];
@@ -290,19 +279,12 @@ const AllVendor = () => {
               currentPage + 1,
             ]);
             for (let i = 1; i <= totalPages; i++) {
-              if (visiblePages.has(i)) {
-                pages.push(i);
-              } else if (pages[pages.length - 1] !== "...") {
-                pages.push("...");
-              }
+              if (visiblePages.has(i)) pages.push(i);
+              else if (pages[pages.length - 1] !== "...") pages.push("...");
             }
-
             return pages.map((page, idx) =>
               page === "..." ? (
-                <span
-                  key={`ellipsis-${idx}`}
-                  className="px-1 text-black select-none"
-                >
+                <span key={idx} className="px-1 text-black select-none">
                   ...
                 </span>
               ) : (
@@ -319,7 +301,6 @@ const AllVendor = () => {
             );
           })()}
         </div>
-
         <button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -330,13 +311,13 @@ const AllVendor = () => {
         </button>
       </div>
 
-      {/* Add Vendor Popup */}
+      {/* Add Vendor Modal */}
       <AddVendorModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
 
-      {/* Edit Vendor Popup */}
+      {/* Edit Vendor Modal */}
       <AddVendorModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
