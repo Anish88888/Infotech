@@ -5,25 +5,27 @@ import { X } from "lucide-react";
 const AddCategoryModal = ({ isOpen, onClose }) => {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
-  const animationDuration = 300; // ms
+  const animationDuration = 300;
   const closeTimerRef = useRef(null);
 
+  // Form states
+  const [categoryName, setCategoryName] = useState("");
+  const [categoryDesc, setCategoryDesc] = useState("");
+  const [categoryUpdate, setCategoryUpdate] = useState("");
+  const [categoryTag, setCategoryTag] = useState("");
+
+  // Handle open/close animation
   useEffect(() => {
     if (isOpen) {
-      if (closeTimerRef.current) {
-        clearTimeout(closeTimerRef.current);
-        closeTimerRef.current = null;
-      }
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
-    } else {
-      if (mounted) {
-        setVisible(false);
-        closeTimerRef.current = setTimeout(() => {
-          setMounted(false);
-          closeTimerRef.current = null;
-        }, animationDuration);
-      }
+    } else if (mounted) {
+      setVisible(false);
+      closeTimerRef.current = setTimeout(() => {
+        setMounted(false);
+        closeTimerRef.current = null;
+      }, animationDuration);
     }
 
     return () => {
@@ -31,6 +33,7 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
     };
   }, [isOpen, mounted]);
 
+  // Close handler
   const handleClose = () => {
     setVisible(false);
     closeTimerRef.current = setTimeout(() => {
@@ -39,11 +42,38 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
     }, animationDuration);
   };
 
+  // Submit handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newCategory = {
+      name: categoryName.trim(),
+      description: categoryDesc.trim(),
+      updateInfo: categoryUpdate.trim(),
+      tag: categoryTag.trim(),
+    };
+
+    if (!newCategory.name) {
+      alert("Please enter a category name.");
+      return;
+    }
+
+    console.log("🟧 New Category Added:", newCategory);
+
+    // Reset form
+    setCategoryName("");
+    setCategoryDesc("");
+    setCategoryUpdate("");
+    setCategoryTag("");
+
+    handleClose();
+  };
+
   if (!mounted) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Overlay */}
+      {/* Overlay - white with 50% transparency */}
       <div
         onClick={handleClose}
         className={`absolute inset-0 bg-white transition-opacity duration-300 ${
@@ -51,84 +81,91 @@ const AddCategoryModal = ({ isOpen, onClose }) => {
         }`}
       />
 
-      {/* Modal Content */}
+      {/* Modal */}
       <div
-        className={`relative bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 transform transition-all duration-300 ease-out
+        className={`relative bg-white rounded-sm shadow-xl w-[600px] h-auto p-4 transform transition-all duration-300
         ${
           visible
             ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-6"
+            : "opacity-0 scale-95 translate-y-3"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-orange-500 hover:text-orange-700"
+          className="absolute top-3 right-3 text-orange-500 hover:text-orange-600"
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
 
         {/* Title */}
-        <h2 className="text-xl font-semibold mb-2 text-black">
-          <span className="border-b-2 border-orange-500">Add Category</span>
+        <h2 className="text-lg font-semibold mb-3 text-black pb-1 inline-block border-b-4 border-orange-400">
+          Add Category
         </h2>
 
         {/* Form */}
-        <form className="space-y-4 mt-4">
+        <form onSubmit={handleSubmit} className="space-y-2">
           {/* Category Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium mb-1">
               Category Name
             </label>
             <input
               type="text"
               placeholder="Enter Category Name"
-              className="w-full border border-orange-500 rounded-sm px-3 py-2 text-sm focus:outline-none"
+              className="w-full border border-orange-400 rounded-sm px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+              required
             />
           </div>
 
           {/* Category Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium mb-1">
               Category Description
             </label>
             <textarea
               placeholder="Enter Category Description"
-              rows="3"
-              className="w-full border border-orange-500 rounded-sm px-3 py-2 text-sm focus:outline-none"
+              className="w-full border border-orange-400 rounded-sm px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500 h-16 resize-none"
+              value={categoryDesc}
+              onChange={(e) => setCategoryDesc(e.target.value)}
             ></textarea>
           </div>
 
           {/* Category Update */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium mb-1">
               Category Update
             </label>
             <input
               type="text"
               placeholder="Enter Category Update Info"
-              className="w-full border border-orange-500 rounded-sm px-3 py-2 text-sm focus:outline-none"
+              className="w-full border border-orange-400 rounded-sm px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
+              value={categoryUpdate}
+              onChange={(e) => setCategoryUpdate(e.target.value)}
             />
           </div>
 
           {/* Category Tag */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium mb-1">
               Category Tag
             </label>
             <textarea
               placeholder="Enter Category Tag"
-              rows="3"
-              className="w-full border border-orange-500 rounded-sm px-3 py-2 text-sm focus:outline-none"
+              className="w-full border border-orange-400 rounded-sm px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-orange-500 h-16 resize-none"
+              value={categoryTag}
+              onChange={(e) => setCategoryTag(e.target.value)}
             ></textarea>
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-1">
             <button
               type="submit"
-              className="bg-orange-500 text-white px-8 py-2 text-sm font-medium rounded hover:bg-orange-600 transition"
+              className="bg-orange-500 text-white px-5 py-1.5 text-sm font-medium hover:bg-orange-600 transition"
             >
               Submit
             </button>

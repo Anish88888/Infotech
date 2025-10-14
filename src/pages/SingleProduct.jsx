@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
 
 const SingleProduct = () => {
   const { id } = useParams();
-
+  const [loading, setLoading] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const vendors = ["Vendor 1", "Vendor 2", "Vendor 3"]; // Replace with your vendors
+
+  const vendors = ["Vendor 1", "Vendor 2", "Vendor 3"];
+
+  useEffect(() => {
+    // Simulate API call
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const product = {
     id,
@@ -26,11 +33,62 @@ const SingleProduct = () => {
     images: Array(8).fill("https://via.placeholder.com/100x100.png?text=Image"),
   };
 
+  // ✅ Skeleton Loader
+  const SkeletonLoader = () => (
+    <div className="max-w-[96%] mx-auto mt-4 mb-10 animate-pulse">
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 w-full">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-8 bg-gray-200 rounded w-[100px]"></div>
+          ))}
+          <div className="h-8 bg-gray-200 rounded w-40 mt-2"></div>
+        </div>
+        <div className="ml-auto flex flex-wrap gap-2 items-center w-full md:w-auto mt-2">
+          <div className="h-8 bg-gray-200 rounded w-full md:w-[400px]"></div>
+          <div className="h-8 bg-gray-200 rounded w-32"></div>
+        </div>
+      </div>
+
+      <div className="bg-white border border-gray-300 p-4 rounded shadow-sm space-y-3">
+        <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+        <div className="h-4 bg-gray-200 rounded w-full"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="h-4 bg-gray-200 rounded w-full"></div>
+          ))}
+        </div>
+        <div className="h-4 bg-gray-200 rounded w-1/2 mt-2"></div>
+
+        <div className="flex flex-col lg:flex-row gap-4 mt-4">
+          <div className="lg:w-3/4 w-full h-[300px] sm:h-[400px] lg:h-[670px] bg-gray-200 rounded"></div>
+          <div className="lg:w-1/4 w-full flex flex-col gap-3">
+            <div className="h-[150px] sm:h-[180px] lg:h-[220px] bg-gray-200 rounded"></div>
+            <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-2 gap-2 sm:gap-3">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-[75px] sm:h-[100px] bg-gray-200 rounded"
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading)
+    return (
+      <DashboardLayout>
+        <SkeletonLoader />
+      </DashboardLayout>
+    );
+
   return (
     <DashboardLayout>
-      <div className="max-w-[98%] mx-auto mt-4 mb-10">
+      <div className="max-w-[96%] mx-auto mt-2 mb-10">
         {/* ---------- Top Header Buttons ---------- */}
-        <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-2">
           {/* Left Filter Buttons */}
           <div className="flex flex-wrap gap-2">
             {["All", "In Review", "Approved", "Rejected"].map((label, i) => (
@@ -150,7 +208,6 @@ const SingleProduct = () => {
 
             {/* Right: Image Grid */}
             <div className="lg:w-1/4 w-full flex flex-col">
-              {/* Top Big Image Box */}
               <div className="border border-orange-300 rounded bg-white h-[150px] sm:h-[180px] lg:h-[220px] mb-3 flex justify-center items-center overflow-hidden">
                 <img
                   src="https://via.placeholder.com/180x180.png?text=Preview"
@@ -159,7 +216,6 @@ const SingleProduct = () => {
                 />
               </div>
 
-              {/* Thumbnails */}
               <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-2 gap-2 sm:gap-3">
                 {product.images.map((img, i) => (
                   <div

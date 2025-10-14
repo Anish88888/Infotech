@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/image 1.png";
 
@@ -13,8 +13,15 @@ import {
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(true); // ✅ Loading state
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Simulate loading delay (e.g., fetching assets or checking auth)
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,12 +30,30 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     if (formData.username && formData.password) {
-      // Here you could add real authentication logic (e.g., API call)
-      navigate("/dashboard"); // go to dashboard
+      navigate("/dashboard");
     } else {
       alert("Please enter credentials");
     }
   };
+
+  // ✅ Skeleton Loader
+  const LoginSkeleton = () => (
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 animate-pulse">
+      <div className="w-full max-w-md flex flex-col items-center">
+        <div className="h-24 w-24 bg-gray-200 rounded mb-8"></div>
+
+        <div className="w-full space-y-4">
+          <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto"></div>
+          <div className="h-[2px] bg-gray-300 w-28 mx-auto"></div>
+          <div className="h-12 bg-gray-200 rounded"></div>
+          <div className="h-12 bg-gray-200 rounded"></div>
+          <div className="h-10 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) return <LoginSkeleton />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4">

@@ -2,9 +2,11 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 h-16 flex items-center px-4 sm:px-6 shadow-md z-50 bg-[#374151]">
-      {/* Title */}
-      <h1 className="text-white text-sm sm:text-base md:text-lg font-semibold truncate"></h1>
+    <header className="fixed top-0 left-64 right-0 h-[50px] flex items-center px-4 sm:px-6 shadow-md z-50 bg-[#343d46]">
+      {/* Title (or other header content like the search/vendor buttons) */}
+      <h1 className="text-white text-sm sm:text-base md:text-lg font-semibold truncate">
+        {/* Placeholder for header content */}
+      </h1>
     </header>
   );
 };

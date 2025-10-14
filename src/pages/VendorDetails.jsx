@@ -234,10 +234,10 @@ const VendorDetails = () => {
     <DashboardLayout>
       <div>
         {/* Add Vendor Button */}
-        <div className="w-full mt-6 mr-4 md:w-auto flex justify-end">
+        <div className="w-full md:w-auto flex justify-end">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-black text-white px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
+            className="bg-black text-white w-48 sm:w-56 px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
           >
             + Add Vendor
           </button>
@@ -252,7 +252,7 @@ const VendorDetails = () => {
         )}
       </div>
       {/* Main Grid for Three Columns */}
-      <div className="max-w-[98%] mx-auto mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div className="max-w-[100%] mx-auto mt-4 grid pl-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
         {/* Column 1 - Vendor & Store Info */}
         <div className="space-y-1 w-full">
           {/* Vendor Info */}
