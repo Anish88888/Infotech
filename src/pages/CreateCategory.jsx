@@ -194,22 +194,22 @@ const CreateCategory = () => {
           </div>
 
           {/* Search */}
-          <div className="flex items-center border ml-8 border-black rounded overflow-hidden h-[36px] w-full max-w-[450px]">
+          <div className="flex items-center border border-black rounded overflow-hidden h-9 w-full max-w-full sm:max-w-[450px] mt-2 sm:mt-0">
             <input
               type="text"
               placeholder="Search Category by Name, ID..."
-              className="flex-1 px-4 text-sm text-gray-800 focus:outline-none h-full"
+              className="flex-1 px-3 sm:px-4 text-sm text-gray-800 focus:outline-none h-full"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 sm:px-6 h-full">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 sm:px-6 h-full">
               Search
             </button>
           </div>
         </div>
 
         {/* Add Button */}
-        <div className="w-full md:w-auto flex justify-end">
+        <div className="w-full md:w-auto flex justify-start md:justify-end mt-2 md:mt-0">
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-black text-white w-52 sm:w-60 px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"

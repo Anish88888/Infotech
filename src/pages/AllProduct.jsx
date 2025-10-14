@@ -249,10 +249,10 @@ const AllProduct = () => {
         </div>
 
         {/* Add Product */}
-        <div className="w-full md:w-auto flex justify-end">
+        <div className="w-full md:w-auto flex justify-start md:justify-end mt-2 md:mt-0">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-black text-white w-52 sm:w-60 px-8 sm:px-10 py-2.5 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
+            className="bg-black text-white w-52 sm:w-60 px-4 sm:px-10 py-2.5 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
           >
             + Add Product
           </button>

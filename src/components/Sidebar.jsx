@@ -196,10 +196,10 @@ const Sidebar = () => {
                   {/* Dashboard on top */}
                   {index === 0 && (
                     <>
-                      <li className="flex flex-col">
+                      <li className="flex flex-col mt-12 md:mt-3">
                         <Link
                           to={item.path}
-                          className="flex items-center gap-2 px-2 py-2 rounded-md font-semibold transition-all duration-200 bg-gray-200 text-black"
+                          className="flex items-center gap-2 px-4 py-2 rounded-md font-semibold transition-all duration-200 bg-gray-200 text-black"
                           onClick={() =>
                             window.innerWidth < 768 && setIsOpen(false)
                           }
@@ -260,11 +260,12 @@ const Sidebar = () => {
 
                           {/* Submenu */}
                           <ul
-                            className={`ml-4 border-l pl-3 mt-1 overflow-hidden transition-all duration-300 ease-in-out ${
-                              isDropdownOpen
-                                ? "max-h-64 opacity-100"
-                                : "max-h-0 opacity-0"
-                            }`}
+                            className={`ml-4 border-l pl-3 mt-1 overflow-hidden transition-all duration-300 ease-in-out
+                              ${
+                                isDropdownOpen
+                                  ? "max-h-64 opacity-100"
+                                  : "max-h-0 opacity-0"
+                              }`}
                           >
                             {item.subItems.map((sub) => {
                               const subActive = activeItem === sub.path;
@@ -272,11 +273,12 @@ const Sidebar = () => {
                                 <li key={sub.name} className="relative">
                                   <Link
                                     to={sub.path}
-                                    className={`block px-2 py-1 rounded-md transition-colors duration-200 ${
-                                      subActive
-                                        ? "text-[#F26422] font-semibold before:content-[''] before:absolute before:left-[-8px] before:top-0 before:h-full before:w-[2px] before:bg-[#F26422]"
-                                        : "text-black hover:text-[#F26422]"
-                                    }`}
+                                    className={`block px-2 py-1 rounded-md transition-colors duration-200
+                                      ${
+                                        subActive
+                                          ? "text-[#F26422] font-semibold before:content-[''] before:absolute before:left-[-8px] before:top-0 before:h-full before:w-[2px] before:bg-[#F26422]"
+                                          : "text-black hover:text-[#F26422]"
+                                      }`}
                                     onClick={() =>
                                       window.innerWidth < 768 &&
                                       setIsOpen(false)

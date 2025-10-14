@@ -23,15 +23,15 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-          <div className="h-8 w-32 bg-gray-300 rounded"></div>
-          <div className="h-8 w-24 bg-gray-300 rounded"></div>
+          <div className="h-8 w-full sm:w-32 bg-gray-300 rounded"></div>
+          <div className="h-8 w-full sm:w-24 bg-gray-300 rounded"></div>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="bg-gray-100 pl-6 min-h-screen">
+    <div className="bg-gray-100 pl-0 sm:pl-6 min-h-screen">
       <DashboardLayout>
         <div className="max-w-[100%] mx-auto mt-4">
           {loading ? (
@@ -39,13 +39,13 @@ const AdminDashboard = () => {
           ) : (
             <div className="mt-4 bg-white rounded-sm shadow p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
               {/* Left side - Profile + Text */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full md:w-auto">
                 <img
                   src="https://i.pravatar.cc/50"
                   alt="Profile"
                   className="w-12 h-12 rounded-full"
                 />
-                <div>
+                <div className="flex flex-col gap-1 w-full">
                   <h2 className="text-lg font-semibold flex flex-wrap items-center gap-2">
                     Welcome Back,{" "}
                     <span className="text-gray-700">NK Yadav</span>
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
               </div>
 
               {/* Right side - Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2 md:gap-2 w-full md:w-auto">
+              <div className="flex flex-col sm:flex-row gap-2 md:gap-2 w-full sm:w-auto">
                 <button className="bg-[#3B7080] text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto">
                   <FaUserPlus /> Add Vendor
                 </button>
