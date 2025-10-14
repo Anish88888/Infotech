@@ -187,7 +187,7 @@ const CreateSubCategory = () => {
                 }}
                 className={`w-24 sm:w-28 px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === tab
-                    ? "bg-orange-500 text-white border-orange-500"
+                    ? "bg-[#FF7B1D] text-white border-orange-500"
                     : "border-gray-400 text-gray-600 hover:bg-gray-100"
                 }`}
               >
@@ -205,7 +205,7 @@ const CreateSubCategory = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 sm:px-6 h-full">
+            <button className="bg-[#FF7B1D] hover:bg-orange-600 text-white text-sm px-3 sm:px-6 h-full">
               Search
             </button>
           </div>
@@ -226,7 +226,7 @@ const CreateSubCategory = () => {
       <div className="bg-white rounded-sm shadow-sm overflow-x-auto pl-4 max-w-[99%] mx-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-orange-500 text-black">
+            <tr className="bg-[#FF7B1D] text-black">
               <th className="p-3 text-center">S.N</th>
               <th className="p-3 text-center">Image</th>
               <th className="p-3 text-center">Sub Category</th>
@@ -345,7 +345,7 @@ const CreateSubCategory = () => {
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
-            className="bg-green-700 text-white px-10 py-3 text-sm font-medium hover:bg-green-800"
+            className="bg-[#247606] text-white px-10 py-3 text-sm font-medium hover:bg-green-800"
           >
             Next
           </button>

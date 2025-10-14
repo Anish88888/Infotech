@@ -127,7 +127,7 @@ const AllOrder = () => {
         },
       ]);
       setLoading(false);
-    }, 1500);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -206,7 +206,7 @@ const AllOrder = () => {
               }}
               className={`px-4 py-1 border rounded text-xs sm:text-sm whitespace-nowrap transition-colors ${
                 activeTab === tab.key
-                  ? "bg-orange-500 text-white border-orange-500"
+                  ? "bg-[#FF7B1D] text-white border-orange-500"
                   : "bg-white text-black border-gray-300 hover:bg-gray-100"
               }`}
             >
@@ -223,7 +223,7 @@ const AllOrder = () => {
               placeholder="Search Order by Order Id, Products, User name, Tag"
               className="flex-1 px-4 text-sm focus:outline-none h-full"
             />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 h-full text-sm">
+            <button className="bg-[#FF7B1D] hover:bg-orange-600 text-white px-4 sm:px-6 h-full text-sm">
               Search
             </button>
           </div>
@@ -241,7 +241,7 @@ const AllOrder = () => {
       <div className="bg-white rounded-sm shadow-sm overflow-x-auto pl-4 max-w-[99%] mx-auto">
         <table className="w-full text-sm border-collapse min-w-[700px]">
           <thead>
-            <tr className="bg-orange-500 text-black">
+            <tr className="bg-[#FF7B1D] text-black">
               <th className="p-3 text-left">S.N</th>
               <th className="p-3 text-left">Order ID</th>
               <th className="p-3 text-left">Date</th>
@@ -304,7 +304,7 @@ const AllOrder = () => {
         <div className="flex justify-end items-center gap-4 mt-6 max-w-[98%] mx-auto">
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-3 text-sm font-medium rounded-sm"
+            className="bg-[#FF7B1D] hover:bg-orange-600 text-white px-10 py-3 text-sm font-medium rounded-0"
           >
             Back
           </button>
@@ -314,9 +314,7 @@ const AllOrder = () => {
                 key={page}
                 onClick={() => setCurrentPage(page)}
                 className={`px-3 py-1 rounded ${
-                  currentPage === page
-                    ? "bg-orange-500 text-white font-bold"
-                    : "bg-gray-100 hover:bg-gray-200"
+                  currentPage === page ? " text-orange-600 font-semibold" : ""
                 }`}
               >
                 {page}
@@ -325,7 +323,7 @@ const AllOrder = () => {
           </div>
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            className="bg-green-600 hover:bg-green-700 text-white px-10 py-3 text-sm font-medium rounded-sm"
+            className="bg-[#247606] hover:bg-green-700 text-white px-10 py-3 text-sm font-medium rounded-0"
           >
             Next
           </button>
