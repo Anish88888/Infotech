@@ -10,6 +10,7 @@ import CreateCategory from "./pages/CreateCategory";
 import CreateSubCategory from "./pages/CreateSubCategory";
 import AllOrder from "./pages/AllOrder";
 import SingleOrder from "./pages/SingleOrder";
+import AllCoupon from "./pages/AllCoupon";
 import Login from "./pages/Login";
 import NewOrderPopup from "./components/NewOrderPopup";
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/category/create-sub" element={<CreateSubCategory />} />
         <Route path="/orders/all" element={<AllOrder />} />
         <Route path="/order/:id" element={<SingleOrder />} />
+        <Route path="/coupons/all" element={<AllCoupon />} />
       </Routes>
       <NewOrderPopup visible={showPopup} onClose={() => setShowPopup(false)} />
     </Router>
