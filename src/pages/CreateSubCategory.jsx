@@ -94,7 +94,7 @@ const CreateSubCategory = () => {
         },
       ]);
       setLoading(false);
-    }, 1000);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, []);

@@ -19,7 +19,7 @@ export default function Login() {
 
   useEffect(() => {
     // Simulate loading delay (e.g., fetching assets or checking auth)
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 

@@ -216,7 +216,7 @@ const AllVendor = () => {
         },
       ]);
       setLoading(false);
-    }, 1500);
+    }, 300);
     return () => clearTimeout(timer);
   }, []);
 

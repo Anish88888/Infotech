@@ -1,22 +1,19 @@
-// src/pages/AllOffer.jsx
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import CreateOfferPopup from "../components/CreateCoupon";
+import CreateOfferPopup from "../components/PushNotification";
 
-const AllOffer = () => {
+const Notification = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [offers, setOffers] = useState([]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const navigate = useNavigate();
   const itemsPerPage = 7;
 
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [offers, setOffers] = useState([]);
-
-  // Load offers (mock)
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -28,7 +25,7 @@ const AllOffer = () => {
           min: 12,
           max: 20,
           amount: "20%",
-          status: "Active",
+          status: "Draft",
         },
         {
           id: "RUSH924",
@@ -37,7 +34,7 @@ const AllOffer = () => {
           min: 12,
           max: 20,
           amount: "20 INR",
-          status: "InActive",
+          status: "Live",
         },
         {
           id: "RUSH925",
@@ -46,7 +43,7 @@ const AllOffer = () => {
           min: 15,
           max: 30,
           amount: "25%",
-          status: "Active",
+          status: "Live",
         },
         {
           id: "RUSH926",
@@ -55,7 +52,7 @@ const AllOffer = () => {
           min: 10,
           max: 25,
           amount: "15%",
-          status: "InActive",
+          status: "Live",
         },
         {
           id: "RUSH927",
@@ -64,7 +61,7 @@ const AllOffer = () => {
           min: 20,
           max: 40,
           amount: "50 INR",
-          status: "Active",
+          status: "Draft",
         },
         {
           id: "RUSH928",
@@ -73,61 +70,7 @@ const AllOffer = () => {
           min: 5,
           max: 15,
           amount: "10%",
-          status: "Active",
-        },
-        {
-          id: "RUSH929",
-          offerType: "Coupon",
-          code: "SUMMER10",
-          min: 8,
-          max: 18,
-          amount: "10%",
-          status: "InActive",
-        },
-        {
-          id: "RUSH930",
-          offerType: "Prepaid",
-          code: "Null",
-          min: 25,
-          max: 50,
-          amount: "100 INR",
-          status: "Active",
-        },
-        {
-          id: "RUSH931",
-          offerType: "Coupon",
-          code: "NEWUSER25",
-          min: 10,
-          max: 30,
-          amount: "25%",
-          status: "InActive",
-        },
-        {
-          id: "RUSH932",
-          offerType: "Prepaid",
-          code: "Null",
-          min: 15,
-          max: 35,
-          amount: "40 INR",
-          status: "Active",
-        },
-        {
-          id: "RUSH933",
-          offerType: "Coupon",
-          code: "MEGA60",
-          min: 30,
-          max: 60,
-          amount: "30%",
-          status: "Active",
-        },
-        {
-          id: "RUSH934",
-          offerType: "Prepaid",
-          code: "Null",
-          min: 20,
-          max: 45,
-          amount: "75 INR",
-          status: "InActive",
+          status: "Live",
         },
       ]);
       setLoading(false);
@@ -139,8 +82,8 @@ const AllOffer = () => {
   // Filter logic for tabs + search
   const filteredOffers = offers
     .filter((offer) => {
-      if (activeTab === "active") return offer.status === "Active";
-      if (activeTab === "inactive") return offer.status === "InActive";
+      if (activeTab === "Live") return offer.status.toLowerCase() === "live";
+      if (activeTab === "Draft") return offer.status.toLowerCase() === "draft";
       return true;
     })
     .filter((offer) =>
@@ -155,11 +98,17 @@ const AllOffer = () => {
   const currentOffers = filteredOffers.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(filteredOffers.length / itemsPerPage);
 
-  // Delete offer
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this offer?")) {
       setOffers((prev) => prev.filter((offer) => offer.id !== id));
     }
+  };
+
+  // Handler for submitting new offer from modal
+  const handleCreateOffer = (newOffer) => {
+    const id = "RUSH" + Math.floor(Math.random() * 1000);
+    const offer = { id, status: "Draft", ...newOffer };
+    setOffers((prev) => [offer, ...prev]);
   };
 
   // Skeleton loader row
@@ -175,24 +124,6 @@ const AllOffer = () => {
     </tr>
   );
 
-  // Add new offer
-  const handleAddOffer = (newOffer) => {
-    const id = "RUSH" + (Math.floor(Math.random() * 1000) + 1000); // random id
-    const offerToAdd = {
-      id,
-      offerType: newOffer.offerType,
-      code: newOffer.couponCode || "Null",
-      min: newOffer.minAmount,
-      max: newOffer.maxAmount,
-      amount:
-        newOffer.discountType === "Percentage"
-          ? `${newOffer.discount}%`
-          : `${newOffer.discount} INR`,
-      status: "Active",
-    };
-    setOffers((prev) => [offerToAdd, ...prev]);
-  };
-
   return (
     <DashboardLayout>
       {/* Top Section */}
@@ -200,7 +131,7 @@ const AllOffer = () => {
         <div className="flex flex-col lg:flex-row lg:items-center gap-3 w-full">
           {/* Tabs */}
           <div className="flex gap-3 items-center overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0">
-            {["all", "active", "inactive"].map((tab) => (
+            {["all", "Live", "Draft"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => {
@@ -213,11 +144,7 @@ const AllOffer = () => {
                     : "border-gray-400 text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                {tab === "all"
-                  ? "All"
-                  : tab === "active"
-                  ? "Active"
-                  : "In Active"}
+                {tab === "all" ? "All" : tab === "Live" ? "Live" : "Draft"}
               </button>
             ))}
           </div>
@@ -241,11 +168,11 @@ const AllOffer = () => {
           className="bg-black text-white w-46 sm:w-52 px-4 sm:px-5 py-2 rounded-sm shadow hover:bg-orange-600 text-xs sm:text-sm flex items-center justify-center whitespace-nowrap"
           onClick={() => setIsCreateModalOpen(true)}
         >
-          + Create Offer
+          + Push Notification
         </button>
       </div>
 
-      {/* Offer Table */}
+      {/* Table */}
       <div className="bg-white rounded-sm shadow-sm overflow-x-auto pl-4 max-w-[99%] mx-auto">
         <table className="w-full text-sm text-center">
           <thead>
@@ -289,8 +216,10 @@ const AllOffer = () => {
                   <td className="p-3">{offer.amount}</td>
                   <td
                     className={`p-3 font-semibold ${
-                      offer.status === "Active"
+                      offer.status.toLowerCase() === "live"
                         ? "text-green-600"
+                        : offer.status.toLowerCase() === "draft"
+                        ? "text-orange-500"
                         : "text-gray-600"
                     }`}
                   >
@@ -354,14 +283,14 @@ const AllOffer = () => {
         </div>
       )}
 
-      {/* Create Offer Popup */}
+      {/* CreateOfferPopup Modal */}
       <CreateOfferPopup
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        onSubmit={handleAddOffer} // pass new offer handler
+        onSubmit={handleCreateOffer}
       />
     </DashboardLayout>
   );
 };
 
-export default AllOffer;
+export default Notification;

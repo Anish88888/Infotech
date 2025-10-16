@@ -11,7 +11,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
     // Simulate API call
-    const timer = setTimeout(() => setLoading(false), 500);
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 

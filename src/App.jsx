@@ -11,13 +11,17 @@ import CreateSubCategory from "./pages/CreateSubCategory";
 import AllOrder from "./pages/AllOrder";
 import SingleOrder from "./pages/SingleOrder";
 import AllCoupon from "./pages/AllCoupon";
+import CreateCoupon from "./components/CreateCoupon";
+import Notification from "./pages/Notification";
+import PushNotification from "./components/PushNotification";
+import BulkAudiance from "./components/BulkAudiencePopup";
 import Login from "./pages/Login";
 import NewOrderPopup from "./components/NewOrderPopup";
 
 function App() {
   const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(() => setShowPopup(true), 3000);
+    const timer = setTimeout(() => setShowPopup(true), 5000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -36,6 +40,10 @@ function App() {
         <Route path="/orders/all" element={<AllOrder />} />
         <Route path="/order/:id" element={<SingleOrder />} />
         <Route path="/coupons/all" element={<AllCoupon />} />
+        <Route path="/coupons/create" element={<CreateCoupon />} />
+        <Route path="/notification" element={<Notification />} />
+        <Route path="/notification/push" element={<PushNotification />} />
+        <Route path="/notification/bulk" element={<BulkAudiance />} />
       </Routes>
       <NewOrderPopup visible={showPopup} onClose={() => setShowPopup(false)} />
     </Router>
